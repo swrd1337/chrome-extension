@@ -5,7 +5,8 @@
     "permissions": [
         "declarativeContent",
         "tabs",
-        "webNavigation"
+        "webNavigation",
+        "storage"
     ],
     "background": {
         "scripts": ["background.js"],
@@ -20,6 +21,7 @@
             "js": ["contentScript.js"]
         }
     ],
+    "options_page": "options.html",
     "page_action": {
         "default_icon": {
             "16": "images/pencil16.png",

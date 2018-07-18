@@ -120,6 +120,24 @@ function addButtonInFileActions() {
     a.appendChild(img);
 }
 
+var getHostPromise = new Promise(
+    function(resolve, reject) {
+        chrome.storage.sync.get(['host'], function(result) {
+            resolve(result.host);
+        });
+    }
+);
+
+var getHost = function() {
+    getHostPromise
+        .then(function (fulfilled) {
+            host = fulfilled;
+        });
+}
+
+var host;
+getHost();
+
 function createOxyUrl(url) {
     // build the OXY-URL
     // OXY-URL is of form gitgh://REPOSITORY_URI/BRANCH/PATH_TO_FILE
@@ -145,7 +163,7 @@ function createOxyUrl(url) {
     }
     secondComponent = encodeURIComponent(secondComponent);
 
-    var oxyUrl = "https://www.oxygenxml.com/oxygen-xml-web-author/" +
+    var oxyUrl = "https://" + host + "/oxygen-xml-web-author/" +
                                                     "app/oxygen.html?url=";
     oxyUrl += protocol + encodeURIComponent("://")
                                 + firstComponent + secondComponent;
