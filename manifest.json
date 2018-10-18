@@ -1,5 +1,5 @@
 {
-    "name": "GitHub to XML Web Author",
+    "name": "Github Web-Author",
     "version": "1.0",
     "description": "Open XML files from GitHub repos with Oxygen XML Web Author in one click.",
     "permissions": [
@@ -18,18 +18,18 @@
                 "http://github.com/*",
                 "https://github.com/*"
             ],
-            "js": ["contentScript.js"]
+            "js": ["content.js"]
         }
     ],
-    "options_page": "options.html",
     "page_action": {
+        "default_popup" :"popup.html",
         "default_icon": {
-            "16": "images/pencil16.png",
-            "32": "images/pencil32.png",
-            "64": "images/pencil64.png",
-            "128": "images/pencil128.png"
+            "16": "images/Web_author80.png",
+            "32": "images/Web_author80.png",
+            "64": "images/Web_author80.png",
+            "128": "images/Web_author80.png"
         }
     },
-    "web_accessible_resources": ["images/pencil16.png"],
+    "web_accessible_resources": ["images/pencil.png"],
     "manifest_version": 2
 }
