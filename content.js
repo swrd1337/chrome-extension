@@ -42,6 +42,8 @@ function addButtonsInTable() {
             var url = content.childNodes[1].childNodes[0].href;
             var extension = url.split('/').pop().split('.');
 
+            console.log(url);
+
             if (extension.length == 1 || extension[0] === '') {
                 continue;
             } 
@@ -88,6 +90,10 @@ function addButtonInFileActions() {
     var file = document.querySelector('.file');
     var file_actions = file.querySelector('.file-actions');
 
+    if(file.querySelector('.openwebauth')){
+        return;
+    }
+
     if(file !== null && file_actions !== null){
 
         var a = document.createElement('a');
@@ -114,23 +120,11 @@ function addButtonInFileActions() {
     }    
 }
 
-var getHostPromise = new Promise(
-    function(resolve, reject) {
-        chrome.storage.sync.get(['host'], function(result) {
-            resolve(result.host);
-        });
-    }
-);
-
-var getHost = function() {
-    getHostPromise
-        .then(function (fulfilled) {
-            host = fulfilled;
-        });
-}
 
 var host;
-getHost();
+chrome.storage.sync.get(['host'], function(result) {
+    host = result.host;
+});
 
 function createOxyUrl(url) {
     const LEN = 3;
@@ -155,7 +149,7 @@ function createOxyUrl(url) {
     var secondComponent = url.replace('blob/', '');
     secondComponent = encodeURIComponent(secondComponent);
 
-    var oxyUrl = 'https://' + host + '/oxygen-xml-web-author/app/oxygen.html?url=';
+    var oxyUrl = host + '?url='
     oxyUrl +=  encodeURIComponent(ghprotocol) + firstComponent + secondComponent;
 
     return oxyUrl;

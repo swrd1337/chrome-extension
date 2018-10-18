@@ -10,23 +10,47 @@ chrome.runtime.onInstalled.addListener(function() {
     });
 });
 
+chrome.tabs.onCreated.addListener(function(tabId, changeInfo, tab) {
+    chrome.tabs.query({url: '*://github.com/*'}, function(tabs) {
+        tabs.forEach(function(tab) {
+            chrome.tabs.sendMessage(tab.id, {method: 'execute'}, function(response) {});
+        });
+    });
+});
+
+chrome.tabs.onActivated.addListener(function(tabId, changeInfo, tab) {
+    chrome.tabs.query({url: '*://github.com/*'}, function(tabs) {
+        tabs.forEach(function(tab) {
+            chrome.tabs.sendMessage(tab.id, {method: 'execute'}, function(response) {});
+        });
+    });
+});
+
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-    setTimeout(function(){
-        if (changeInfo.status == 'complete' && tab.status == 'complete' && tab.url != undefined) {
-            chrome.tabs.query({url: '*://github.com/*'}, function(tabs) {
-                tabs.forEach(function(tab) {
-                    chrome.tabs.sendMessage(tab.id, {method: 'execute'}, function(response) {});
-                });
-            });
-        }
-    }, 0);
+    chrome.tabs.query({url: '*://github.com/*'}, function(tabs) {
+        tabs.forEach(function(tab) {
+            chrome.tabs.sendMessage(tab.id, {method: 'execute'}, function(response) {});
+        });
+    });
+});
+
+chrome.webNavigation.onDOMContentLoaded.addListener(function(details) {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, {method: "execute"},function(response) {
+        });
+    });
 });
 
 chrome.webNavigation.onHistoryStateUpdated.addListener(function(details) {
-    setTimeout(function() {
-        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-            chrome.tabs.sendMessage(tabs[0].id, {method: "executeScript"},function(response) {
-            });
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, {method: "execute"},function(response) {
         });
-    }, 0);
+    });
+});
+
+chrome.webNavigation.onCompleted.addListener(function(details) {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, {method: "execute"},function(response) {
+        });
+    });
 });
