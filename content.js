@@ -1,5 +1,5 @@
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if (request.method == 'execute') {
+    if (request.method === 'execute') {
         var checkIf = false;
         var tabUrlLastComp = window.location.href.split('/').pop();
         var extension = tabUrlLastComp.split('.');
@@ -19,83 +19,81 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 function addButtonsInTable() {
-    var logoURL = chrome.extension.getURL('images/pencil.png');
-    var table, tbody, rows = null;
+    var logoURL, table, tbody, rows = null;
+
+    logoURL = chrome.extension.getURL('images/pencil.png');
     table = document.querySelector('.files');
 
-    try{
+    try {
         tbody = table.querySelectorAll('tbody');
-    } catch (error) {
-        return;
-    }
+    } catch(error) {return;}
 
     rows  = tbody[tbody.length - 1].querySelectorAll('.js-navigation-item');
+    var originalContent = rows[rows.length - 1].querySelector('.content');
 
-    if (table !== null && tbody !== null && rows !== null) {
-        for (var row = 0; row < rows.length; row++) {
-            var content = rows[row].querySelector('.content');
+    rows.forEach(row => {
+        row.addEventListener('mouseenter', function(){
+            var content = row.querySelector('.content');
+            if (content === null) {return;}
             
-            if (content === null) {
+            if(content.contains(content.querySelector('.waicon'))){
                 return;
             }
-    
+
             var url = content.childNodes[1].childNodes[0].href;
-            var extension = url.split('/').pop().split('.');
-
-            console.log(url);
-
-            if (extension.length == 1 || extension[0] === '') {
-                continue;
-            } 
-
-            extension = extension.pop();
-            
+            var extension = url.split('/').pop().split('.').pop();
+ 
             if (extension === 'xml' || extension === 'dita'
                 || extension === 'ditamap' || extension === 'ditaval') {
-    
-                var icon = rows[row].querySelector('.icon');
-                var svg = icon.querySelector('svg');
-                var img = icon.querySelector('img');
-
-                if (svg === null || img === null ) {
-                    break;
-                }
-
-                icon.removeChild(svg);
-                icon.removeChild(img);
-    
+                
                 var a = document.createElement('a');
+                a.className = 'waicon'
                 a.href = createOxyUrl(url);
                 a.target = '_blank';
                 a.style.display = 'inline-block';
-    
-                var img = document.createElement('img');
-                img.title = 'Open in XML Web Author';
-                img.src = logoURL;
-                img.width = '14';
-                img.height = '14';
-                a.appendChild(img);
                 
-                if(!icon.contains(a)){
-                    icon.appendChild(a);
-                }
+                var imgpen = document.createElement('img');
+                imgpen.title = 'Open in XML Web Author';
+                imgpen.src = logoURL;
+                imgpen.width = '14';
+                imgpen.height = '14';
+                a.appendChild(imgpen);
+            
+                content.appendChild(a);
+ 
             }
-        }
-    }
+        });
+
+        row.addEventListener('mouseout', function(){
+            var content = row.querySelector('.content');
+            if(content.querySelector('.waicon')){
+                var state = false;
+                var waicon = content.querySelector('.waicon');
+
+                // waicon.addEventListener('mouseenter', function(){
+                //     state = true;
+                // });
+
+                if(!state){
+                    content.removeChild(content.querySelector('.waicon'));
+                }
+            }  
+        });
+    });
 }
 
 function addButtonInFileActions() {
     var logoURL = chrome.extension.getURL('images/pencil.png');
-
     var file = document.querySelector('.file');
-    var file_actions = file.querySelector('.file-actions');
+    var file_actions = null;
 
-    if(file.querySelector('.openwebauth')){
-        return;
-    }
+    try{
+        file_actions = file.querySelector('.file-actions');
+    } catch(error) {return;}
+
+    if(file.querySelector('.openwebauth')) {return;}
 
     if(file !== null && file_actions !== null){
-
         var a = document.createElement('a');
         a.className = 'openwebauth';
         a.href = createOxyUrl(window.location.href);
@@ -120,14 +118,13 @@ function addButtonInFileActions() {
     }    
 }
 
-
-var host;
-chrome.storage.sync.get(['host'], function(result) {
-    host = result.host;
-});
-
 function createOxyUrl(url) {
     const LEN = 3;
+
+    var host;
+    chrome.storage.sync.get(['host'], function(result) {
+        host = result.host;
+    });
 
     var ghprotocol = 'gitgh://';
     var firstComponent = 'https://github.com';

@@ -6,7 +6,11 @@
         "declarativeContent",
         "tabs",
         "webNavigation",
-        "storage"
+        "storage",
+        "tabs",
+        "notifications",
+        "http://*/*",
+        "https://*/*"
     ],
     "background": {
         "scripts": ["background.js"],

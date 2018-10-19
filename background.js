@@ -10,40 +10,10 @@ chrome.runtime.onInstalled.addListener(function() {
     });
 });
 
-chrome.tabs.onCreated.addListener(function(tabId, changeInfo, tab) {
-    chrome.tabs.query({url: '*://github.com/*'}, function(tabs) {
-        tabs.forEach(function(tab) {
-            chrome.tabs.sendMessage(tab.id, {method: 'execute'}, function(response) {});
-        });
-    });
-});
-
-chrome.tabs.onActivated.addListener(function(tabId, changeInfo, tab) {
-    chrome.tabs.query({url: '*://github.com/*'}, function(tabs) {
-        tabs.forEach(function(tab) {
-            chrome.tabs.sendMessage(tab.id, {method: 'execute'}, function(response) {});
-        });
-    });
-});
-
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     chrome.tabs.query({url: '*://github.com/*'}, function(tabs) {
         tabs.forEach(function(tab) {
             chrome.tabs.sendMessage(tab.id, {method: 'execute'}, function(response) {});
-        });
-    });
-});
-
-chrome.webNavigation.onDOMContentLoaded.addListener(function(details) {
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, {method: "execute"},function(response) {
-        });
-    });
-});
-
-chrome.webNavigation.onHistoryStateUpdated.addListener(function(details) {
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, {method: "execute"},function(response) {
         });
     });
 });
