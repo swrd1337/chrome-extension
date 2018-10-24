@@ -1,4 +1,4 @@
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.method === 'execute') {
         var checkIf = false;
         var tabUrlLastComp = window.location.href.split('/').pop();
@@ -11,143 +11,133 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
         extension = extension.pop();
 
-        if ((extension === 'xml' || extension === 'dita'
-                || extension === 'ditamap' || extension === 'ditaval') && !checkIf) {
+        if ((extension === 'xml' || extension === 'dita' ||
+                extension === 'ditamap' || extension === 'ditaval') && !checkIf) {
             addButtonInFileActions();
         }
     }
 });
 
+//TODO Flexbox!!!!
+function createEditButton() {
+    var a = document.createElement('a');
+    a.title = 'Open in XML Web Author';
+    a.target = '_blank';
+    a.style.display = 'inline-block';
+
+    var logoURL = chrome.extension.getURL('images/pencil.png');
+    var imgpen = document.createElement('img');
+    imgpen.src = logoURL;
+    imgpen.width = '14';
+    imgpen.height = '14';
+
+    a.appendChild(imgpen);
+
+    return a;
+}
+
 function addButtonsInTable() {
-    var logoURL, table, tbody, rows = null;
-
-    logoURL = chrome.extension.getURL('images/pencil.png');
-    table = document.querySelector('.files');
-
-    try {
-        tbody = table.querySelectorAll('tbody');
-    } catch(error) {return;}
-
-    rows  = tbody[tbody.length - 1].querySelectorAll('.js-navigation-item');
-    var originalContent = rows[rows.length - 1].querySelector('.content');
-
-    rows.forEach(row => {
-        row.addEventListener('mouseenter', function(){
-            var content = row.querySelector('.content');
-            if (content === null) {return;}
-            
-            if(content.contains(content.querySelector('.waicon'))){
+    var table = document.querySelector('.repository-content');
+    if (table.classList.contains('wa-initialized')) {
+        return;
+    }
+    table.classList.add('wa-initialized');
+    var a = createEditButton();
+    
+    table.addEventListener('mouseover', function onFileHover(e) {
+        var candidateRow = e.target;
+        while (!candidateRow.className || candidateRow.className.indexOf('js-navigation-item') === -1) {
+            candidateRow = candidateRow.parentNode;
+            if (!candidateRow) {
                 return;
             }
+        }
+    
+        var content = candidateRow.querySelector('.content');
+        if (!content || content.contains(a)) {
+            return;
+        }
 
-            var url = content.childNodes[1].childNodes[0].href;
-            var extension = url.split('/').pop().split('.').pop();
- 
-            if (extension === 'xml' || extension === 'dita'
-                || extension === 'ditamap' || extension === 'ditaval') {
-                
-                var a = document.createElement('a');
-                a.className = 'waicon'
-                a.href = createOxyUrl(url);
-                a.target = '_blank';
-                a.style.display = 'inline-block';
-                
-                var imgpen = document.createElement('img');
-                imgpen.title = 'Open in XML Web Author';
-                imgpen.src = logoURL;
-                imgpen.width = '14';
-                imgpen.height = '14';
-                a.appendChild(imgpen);
-            
-                content.appendChild(a);
- 
-            }
-        });
-
-        row.addEventListener('mouseout', function(){
-            var content = row.querySelector('.content');
-            if(content.querySelector('.waicon')){
-                var state = false;
-                var waicon = content.querySelector('.waicon');
-
-                // waicon.addEventListener('mouseenter', function(){
-                //     state = true;
-                // });
-
-                if(!state){
-                    content.removeChild(content.querySelector('.waicon'));
+        var url = content.childNodes[1].firstChild.href;
+        var extension = url.split('/').pop().split('.').pop();
+    
+        if (extension === 'xml' || extension === 'dita' ||
+            extension === 'ditamap' || extension === 'ditaval') {
+    
+            a.href = createOxyUrl(url);
+            content.appendChild(a);
+    
+            // TODO inject span relative img absolute!!!
+    
+            function onMouseLeave(e) {
+                candidateRow.removeEventListener('mouseleave', onMouseLeave);
+                if (e.isTruseted !== true) {
+                    try {
+                        a.parentElement.removeChild(a);
+                    } catch (error) {
+                        
+                        return;
+                    }
                 }
-            }  
-        });
-    });
+            }            
+    
+            candidateRow.addEventListener('mouseleave', onMouseLeave);
+        }
+    });  
 }
 
 function addButtonInFileActions() {
-    var logoURL = chrome.extension.getURL('images/pencil.png');
     var file = document.querySelector('.file');
     var file_actions = null;
 
-    try{
+    try {
         file_actions = file.querySelector('.file-actions');
-    } catch(error) {return;}
+    } catch (error) {
+        return;
+    }
 
-    if(file.querySelector('.openwebauth')) {return;}
-
-    if(file !== null && file_actions !== null){
+    if (file !== null && file_actions !== null) {
+        var btnGroup = file_actions.querySelector('.BtnGroup');
         var a = document.createElement('a');
-        a.className = 'openwebauth';
         a.href = createOxyUrl(window.location.href);
+        a.className = 'btn btn-sm BtnGroup-item';
+        a.innerHTML = 'Web Author';
         a.target = '_blank';
-        a.style.marginRight = '5px';
-        a.style.padding = '5px';
-        a.style.border = '0';
-        a.style.display = 'inline-block';
-        a.style.verticalAlign = 'middle';
-        a.style.lineHeight = '1';
-        
-        if(!file_actions.classList.contains(a.className)){
-            file_actions.insertBefore(a, file_actions.firstChild);
+        a.id = 'walink';
+
+        if (btnGroup.contains(btnGroup.querySelector('#walink'))) {
+            return;
         }
 
-        var img = document.createElement('img');
-        img.title = 'Open in XML Web Author';
-        img.width = '15';
-        img.height = '15';
-        img.src = logoURL;
-        a.appendChild(img);
-    }    
+        btnGroup.insertBefore(a, btnGroup.firstChild);
+    }
 }
+
+var host;
+chrome.storage.sync.get(['host'], function (result) {
+    host = result.host;
+});
 
 function createOxyUrl(url) {
     const LEN = 3;
-
-    var host;
-    chrome.storage.sync.get(['host'], function(result) {
-        host = result.host;
-    });
-
-    var ghprotocol = 'gitgh://';
     var firstComponent = 'https://github.com';
-    
+    var ghprotocol = 'gitgh://';
+    var qurl = '?url=';
+
     url = url.replace(firstComponent, '');
     var splitUrl = url.split('/');
 
-    // FirstComponent is of form https://github.com/USER/REPOSITORY and double encoded.
     for (var i = 0; i < LEN; i++) {
-        if(splitUrl[i] !== ''){
+        if (splitUrl[i] !== '') {
             firstComponent += '/' + splitUrl[i];
-            url = url.replace(splitUrl[i] + '/' , '');
+            url = url.replace(splitUrl[i] + '/', '');
         }
     }
 
     firstComponent = encodeURIComponent(encodeURIComponent(firstComponent));
 
-    // secondComponent is of form /BRANCH/PATH_TO_FILE and encoded.
-    var secondComponent = url.replace('blob/', '');
-    secondComponent = encodeURIComponent(secondComponent);
-
-    var oxyUrl = host + '?url='
-    oxyUrl +=  encodeURIComponent(ghprotocol) + firstComponent + secondComponent;
+    var secondComponent = encodeURIComponent(url.replace('blob/', ''));
+    var oxyUrl = host + qurl + encodeURIComponent(ghprotocol) + firstComponent + secondComponent;
 
     return oxyUrl;
 }

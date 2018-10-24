@@ -7,8 +7,6 @@
         "tabs",
         "webNavigation",
         "storage",
-        "tabs",
-        "notifications",
         "http://*/*",
         "https://*/*"
     ],
@@ -16,22 +14,20 @@
         "scripts": ["background.js"],
         "persistent": false
     },
-    "content_scripts": [
-        {
-            "matches": [
-                "http://github.com/*",
-                "https://github.com/*"
-            ],
-            "js": ["content.js"]
-        }
-    ],
+    "content_scripts": [{
+        "matches": [
+            "http://github.com/*",
+            "https://github.com/*"
+        ],
+        "js": ["content.js"]
+    }],
     "page_action": {
-        "default_popup" :"popup.html",
+        "default_popup": "popup.html",
         "default_icon": {
-            "16": "images/Web_author80.png",
-            "32": "images/Web_author80.png",
-            "64": "images/Web_author80.png",
-            "128": "images/Web_author80.png"
+            "16": "images/webauthor.png",
+            "32": "images/webauthor.png",
+            "64": "images/webauthor.png",
+            "128": "images/webauthor.png"
         }
     },
     "web_accessible_resources": ["images/pencil.png"],

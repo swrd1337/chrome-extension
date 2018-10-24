@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
-  <style>
-    body {
+<style>
+
+  body {
       font-family: robotolight, Arial, Helvetica, sans-serif;
+      width: 250px;
+      height: 150px;
     }
 
     input {
@@ -11,7 +14,8 @@
       border-radius: 4px;
       font-size: 12px;
       background-color: white;
-      padding: 4px 8px;
+      padding: 6px 8px;
+      width: 100%;
     }
 
     button {
@@ -21,25 +25,57 @@
       border-radius: 4px;
       margin-top: 10px;
       font-size: 12px;
+      padding: 10px;
     }
 
     button:hover {
       background-color: lightgray;
     }
+
+    .primary-button {
+      background-color: #337ab7;
+      border-color: #2e6da4;
+      color: #fff;
+    }
+    
+    .primary-button:hover {
+      background-color: #286090;
+      border-color: #204d74;
+    }
+
+    .button-container {
+      text-align: right;
+    }
+
+    .dialog-tittle {
+      font-family: robotolight, Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
   </style>
 
-  <body>
+<body>
 
-    <h3>GitHub to Oxygen XML Web Author</h3>
-    <p>Set the XML Web Author URL.</p> 
+  <div class="dialog-tittle">
+    <span>Oxygen XML Web Author extension</span>
+  </div>
 
-    <input type="text" name="host" value="" placeholder='https://www.oxygenxml.com/oxygen-xml-web-author/app/oxygen.html' id="host"/>
+  <p>Enter the URL of the Oxygen XML Web Author dashboard</p>
 
-    <button id="save">Save</button>
+  <input type="text" name="host" value="" placeholder='https://www.oxygenxml.com/oxygen-xml-web-author/app/oxygen.html'
+    id="host" />
+
+  <div class="button-container">
+    <button id="save" class="primary-button">Save</button>
     <button id="cancel">Cancel</button>
+  </div>
 
-    <script src="popup.js"></script>
-    <script src="displayhost.js"></script>
+  <script src="popup.js"></script>
+  <script src="displayhost.js"></script>
 
-  </body>
+</body>
+
 </html>
