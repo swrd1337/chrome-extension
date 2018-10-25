@@ -1,0 +1,10 @@
+#wa-link {
+    display: inline-block;
+    height: 19px;
+    padding: 0 7px;
+}
+
+#wa-link:hover {
+    background-color: lightgray;
+    border-radius: 3px;
+}

@@ -18,14 +18,14 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 });
 
-//TODO Flexbox!!!!
+
 function createEditButton() {
     var a = document.createElement('a');
+    a.id = 'wa-link';
     a.title = 'Open in XML Web Author';
     a.target = '_blank';
-    a.style.display = 'inline-block';
 
-    var logoURL = chrome.extension.getURL('images/pencil.png');
+    var logoURL = chrome.extension.getURL('images/wapencil.png');
     var imgpen = document.createElement('img');
     imgpen.src = logoURL;
     imgpen.width = '14';
@@ -36,14 +36,17 @@ function createEditButton() {
     return a;
 }
 
+
 function addButtonsInTable() {
     var table = document.querySelector('.repository-content');
+
     if (table.classList.contains('wa-initialized')) {
         return;
     }
+
     table.classList.add('wa-initialized');
     var a = createEditButton();
-    
+
     table.addEventListener('mouseover', function onFileHover(e) {
         var candidateRow = e.target;
         while (!candidateRow.className || candidateRow.className.indexOf('js-navigation-item') === -1) {
@@ -52,7 +55,7 @@ function addButtonsInTable() {
                 return;
             }
         }
-    
+
         var content = candidateRow.querySelector('.content');
         if (!content || content.contains(a)) {
             return;
@@ -60,31 +63,44 @@ function addButtonsInTable() {
 
         var url = content.childNodes[1].firstChild.href;
         var extension = url.split('/').pop().split('.').pop();
-    
+
         if (extension === 'xml' || extension === 'dita' ||
             extension === 'ditamap' || extension === 'ditaval') {
-    
+
             a.href = createOxyUrl(url);
+
+            var span = content.querySelector('.css-truncate.css-truncate-target');
+            span.style.maxWidth = '84%';
+
             content.appendChild(a);
-    
-            // TODO inject span relative img absolute!!!
-    
-            function onMouseLeave(e) {
+
+            function onMouseLeave() {
+                span.style.maxWidth = '100%';
                 candidateRow.removeEventListener('mouseleave', onMouseLeave);
-                if (e.isTruseted !== true) {
-                    try {
-                        a.parentElement.removeChild(a);
-                    } catch (error) {
-                        
-                        return;
-                    }
+                try {
+                    a.parentElement.removeChild(a);
+                } catch (error) {
+                    return;
                 }
-            }            
-    
+            }
+
             candidateRow.addEventListener('mouseleave', onMouseLeave);
         }
-    });  
+    });
 }
+
+
+function createButtonInFileActions(){
+    var a = document.createElement('a');
+    a.href = createOxyUrl(window.location.href);
+    a.className = 'btn btn-sm BtnGroup-item';
+    a.innerHTML = 'Web Author';
+    a.target = '_blank';
+    a.id = 'walink';
+
+    return a;
+}
+
 
 function addButtonInFileActions() {
     var file = document.querySelector('.file');
@@ -98,25 +114,22 @@ function addButtonInFileActions() {
 
     if (file !== null && file_actions !== null) {
         var btnGroup = file_actions.querySelector('.BtnGroup');
-        var a = document.createElement('a');
-        a.href = createOxyUrl(window.location.href);
-        a.className = 'btn btn-sm BtnGroup-item';
-        a.innerHTML = 'Web Author';
-        a.target = '_blank';
-        a.id = 'walink';
 
         if (btnGroup.contains(btnGroup.querySelector('#walink'))) {
             return;
         }
 
+        var a = createButtonInFileActions();
         btnGroup.insertBefore(a, btnGroup.firstChild);
     }
 }
+
 
 var host;
 chrome.storage.sync.get(['host'], function (result) {
     host = result.host;
 });
+
 
 function createOxyUrl(url) {
     const LEN = 3;

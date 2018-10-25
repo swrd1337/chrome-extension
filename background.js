@@ -11,7 +11,9 @@ chrome.runtime.onInstalled.addListener(function () {
     });
 });
 
+
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+    console.log(1);
     chrome.tabs.query({
         url: '*://github.com/*'
     }, function (tabs) {
@@ -22,3 +24,5 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
         });
     });
 });
+
+// TODO: Add the listener when goback button is clicked!

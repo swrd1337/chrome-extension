@@ -5,6 +5,7 @@ document.getElementById('save').addEventListener('click', function () {
     });
 });
 
+
 document.getElementById('save').addEventListener('click', function () {
     chrome.tabs.query({
         active: true,
@@ -16,6 +17,7 @@ document.getElementById('save').addEventListener('click', function () {
     });
     window.close();
 });
+
 
 document.getElementById('cancel').addEventListener('click', function () {
     window.close();

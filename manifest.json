@@ -19,6 +19,7 @@
             "http://github.com/*",
             "https://github.com/*"
         ],
+        "css": ["style.css"],
         "js": ["content.js"]
     }],
     "page_action": {
@@ -30,6 +31,6 @@
             "128": "images/webauthor.png"
         }
     },
-    "web_accessible_resources": ["images/pencil.png"],
+    "web_accessible_resources": ["images/wapencil.png"],
     "manifest_version": 2
 }
