@@ -36,7 +36,6 @@ function createEditButton() {
     return a;
 }
 
-
 function addButtonsInTable() {
     var table = document.querySelector('.repository-content');
 
@@ -47,7 +46,7 @@ function addButtonsInTable() {
     table.classList.add('wa-initialized');
     var a = createEditButton();
 
-    table.addEventListener('mouseover', function onFileHover(e) {
+    table.addEventListener('mouseover', e => {
         var candidateRow = e.target;
         while (!candidateRow.className || candidateRow.className.indexOf('js-navigation-item') === -1) {
             candidateRow = candidateRow.parentNode;
@@ -68,7 +67,6 @@ function addButtonsInTable() {
             extension === 'ditamap' || extension === 'ditaval') {
 
             a.href = createOxyUrl(url);
-
             var span = content.querySelector('.css-truncate.css-truncate-target');
             span.style.maxWidth = '84%';
 
@@ -77,20 +75,28 @@ function addButtonsInTable() {
             function onMouseLeave() {
                 span.style.maxWidth = '100%';
                 candidateRow.removeEventListener('mouseleave', onMouseLeave);
-                try {
+                if (content.contains(a)) {
                     a.parentElement.removeChild(a);
-                } catch (error) {
-                    return;
                 }
             }
 
             candidateRow.addEventListener('mouseleave', onMouseLeave);
+            var nav = document.querySelectorAll('.js-navigation-open');
+
+            nav.forEach(element => {
+                element.onclick = () => {
+                    table.classList.remove('wa-initialized');
+                    if (content.contains(a)) {
+                        a.parentElement.removeChild(a);
+                    }
+                }
+            });
         }
     });
 }
 
 
-function createButtonInFileActions(){
+function createButtonInFileActions() {
     var a = document.createElement('a');
     a.href = createOxyUrl(window.location.href);
     a.className = 'btn btn-sm BtnGroup-item';

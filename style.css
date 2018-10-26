@@ -1,10 +1,65 @@
 #wa-link {
+    position: absolute;
     display: inline-block;
-    height: 19px;
+    margin-left: 5px;
+    height: 20px;
     padding: 0 7px;
 }
 
 #wa-link:hover {
     background-color: lightgray;
     border-radius: 3px;
+}
+
+#popup-body {
+    font-family: robotolight, Arial, Helvetica, sans-serif;
+    width: 250px;
+    height: 150px;
+}
+
+input {
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 12px;
+    background-color: white;
+    padding: 6px 8px;
+    width: 100%;
+}
+
+button {
+    background-color: white;
+    color: black;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-size: 12px;
+    padding: 10px;
+}
+
+button:hover {
+    background-color: lightgray;
+}
+
+.primary-button {
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    color: #fff;
+}
+
+.primary-button:hover {
+    background-color: #286090;
+    border-color: #204d74;
+}
+
+.button-container {
+    text-align: right;
+}
+
+.dialog-tittle {
+    font-family: robotolight, Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
 }
