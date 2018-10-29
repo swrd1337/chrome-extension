@@ -36,10 +36,11 @@ function createEditButton() {
     return a;
 }
 
+
 function addButtonsInTable() {
     var table = document.querySelector('.repository-content');
 
-    if (table.classList.contains('wa-initialized')) {
+    if (table === null || table.classList.contains('wa-initialized')) {
         return;
     }
 
@@ -47,6 +48,7 @@ function addButtonsInTable() {
     var a = createEditButton();
 
     table.addEventListener('mouseover', e => {
+
         var candidateRow = e.target;
         while (!candidateRow.className || candidateRow.className.indexOf('js-navigation-item') === -1) {
             candidateRow = candidateRow.parentNode;
@@ -100,7 +102,7 @@ function createButtonInFileActions() {
     var a = document.createElement('a');
     a.href = createOxyUrl(window.location.href);
     a.className = 'btn btn-sm BtnGroup-item';
-    a.innerHTML = 'Web Author';
+    a.innerHTML = 'Open in XML Web Author';
     a.target = '_blank';
     a.id = 'walink';
 
