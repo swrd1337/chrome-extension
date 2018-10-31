@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body id="popup-body">
 
-  <div class="dialog-tittle">
-    <span>Oxygen XML Web Author extension</span>
+  <div class="ext-container">
+    <a id="oxygen-link" href="https://www.oxygenxml.com/xml_web_author.html" target="_blank" title="Oxygen XML Web Author">
+      <img id="web-author-img" src="images/webauthor.png" />
+    </a>
+
+    <h1 class="dialog-tittle">Oxygen XML Web Author extension</h1>
   </div>
 
-  <p>Enter the URL of the Oxygen XML Web Author dashboard</p>
+  <p id="ext-info">Enter the URL of the Oxygen XML Web Author dashboard</p>
 
   <input type="text" name="host" value="" placeholder='https://www.oxygenxml.com/oxygen-xml-web-author/app/oxygen.html'
     id="host" />
 
   <div class="button-container">
-    <button id="save" class="primary-button">Save</button>
-    <button id="cancel">Cancel</button>
+    <button id="save" class="primary-button ext-button">Save</button>
+    <button id="cancel" class="ext-button">Cancel</button>
   </div>
 
   <script src="popup.js"></script>

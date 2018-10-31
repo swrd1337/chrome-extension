@@ -1,164 +1,193 @@
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    if (request.method === 'execute') {
-        var checkIf = false;
-        var tabUrlLastComp = window.location.href.split('/').pop();
-        var extension = tabUrlLastComp.split('.');
-
-        if (extension.length === 1 || extension[0] === '') {
-            addButtonsInTable();
-            checkIf = true;
+(function () {
+    chrome.runtime.onMessage.addListener(function (request) {
+        if (request.method === 'execute') {
+            enhancePage();
         }
+    });
 
-        extension = extension.pop();
 
-        if ((extension === 'xml' || extension === 'dita' ||
-                extension === 'ditamap' || extension === 'ditaval') && !checkIf) {
+    function enhancePage() {
+        var lastUrlFromTab = window.location.href.split('/').pop();
+        var fileExtension = lastUrlFromTab.split('.');
+
+        // Add Web Author button in every directory.
+        addButtonsInTable();
+
+        fileExtension = fileExtension.pop();
+
+        // Add Web Author button only for opened files with these extensions.
+        if (fileExtension === 'xml' || fileExtension === 'dita' ||
+                fileExtension === 'ditamap' || fileExtension === 'ditaval' ||
+                    fileExtension === 'xhtml' || fileExtension === 'dbk') {
             addButtonInFileActions();
         }
     }
-});
 
 
-function createEditButton() {
-    var a = document.createElement('a');
-    a.id = 'wa-link';
-    a.title = 'Open in XML Web Author';
-    a.target = '_blank';
+    function createEditButton() {
+        var webAuthorButton = document.createElement('a');
+        webAuthorButton.id = 'wa-link';
+        webAuthorButton.title = 'Open with Oxygen XML Web Author.';
+        webAuthorButton.target = '_blank';
 
-    var logoURL = chrome.extension.getURL('images/wapencil.png');
-    var imgpen = document.createElement('img');
-    imgpen.src = logoURL;
-    imgpen.width = '14';
-    imgpen.height = '14';
+        var logoURL = chrome.extension.getURL('images/wapencil.png');
+        var pencilImg = document.createElement('img');
+        pencilImg.src = logoURL;
+        pencilImg.width = '14';
+        pencilImg.height = '14';
 
-    a.appendChild(imgpen);
+        webAuthorButton.appendChild(pencilImg);
 
-    return a;
-}
-
-
-function addButtonsInTable() {
-    var table = document.querySelector('.repository-content');
-
-    if (table === null || table.classList.contains('wa-initialized')) {
-        return;
+        return webAuthorButton;
     }
 
-    table.classList.add('wa-initialized');
-    var a = createEditButton();
 
-    table.addEventListener('mouseover', e => {
+    var editButton = createEditButton();
 
-        var candidateRow = e.target;
-        while (!candidateRow.className || candidateRow.className.indexOf('js-navigation-item') === -1) {
-            candidateRow = candidateRow.parentNode;
-            if (!candidateRow) {
+
+    function addEditButton(spanNavContent) {
+        removeEditButton();
+        spanNavContent.style.maxWidth = '84%';
+        spanNavContent.parentNode.appendChild(editButton);
+    }
+
+
+    function removeEditButton() {
+        var oldEditButton = document.getElementById('wa-link');
+        if (oldEditButton) {
+            // Cleanup the parent of the old parent of the edit button.
+            var oldButtonParent = oldEditButton.parentElement;
+            if (oldButtonParent) {
+                oldButtonParent.style.maxWidth = '100%';
+                oldButtonParent.removeChild(oldEditButton)
+            }
+        }
+    }
+
+
+    function addButtonsInTable() {
+        // Stable container where we add 'mouseover' event listener.
+        var repoContainer = document.querySelector('#js-repo-pjax-container');
+
+        if (repoContainer === null) {
+            return;
+        }
+
+        repoContainer.classList.add('wa-initialized');
+
+        repoContainer.addEventListener('mouseover', e => {
+            var candidateRow = e.target;
+
+            // Moving from the '#js-repo-pjax-container' to '.js-navigation-item' where we add Web Author button.
+            while (!candidateRow.classList || !candidateRow.classList.contains('js-navigation-item')) {
+                candidateRow = candidateRow.parentNode;
+                if (!candidateRow) {
+                    return;
+                }
+            }
+
+            // Get the '.content' element from current candidateRow and check if already has WebAuthor button.
+            var navigationContent = candidateRow.querySelector('.content');
+            if (!navigationContent || navigationContent.contains(editButton)) {
                 return;
             }
-        }
 
-        var content = candidateRow.querySelector('.content');
-        if (!content || content.contains(a)) {
+            var url = navigationContent.childNodes[1].firstChild.href;
+            var fileExtension = url.split('/').pop().split('.').pop();
+
+            if (fileExtension === 'xml' || fileExtension === 'dita' ||
+                fileExtension === 'ditamap' || fileExtension === 'ditaval') {
+
+                editButton.href = getWebAuthorUrl(url);
+
+                // Get'.css-truncate.css-truncate-target' for button positioning.
+                var spanNavContent = navigationContent.querySelector('.css-truncate.css-truncate-target');
+                addEditButton(spanNavContent);
+
+                // Remove the Web Author button and 'mouseleave' event when mouse leave 'js-navigation-item'.
+                var onMouseLeave = () => {
+                    candidateRow.removeEventListener('mouseleave', onMouseLeave);
+                        removeEditButton();
+                }
+
+                candidateRow.addEventListener('mouseleave', onMouseLeave);
+            }
+        });
+    }
+
+
+    function createButtonInFileActions() {
+        var webAuthorButton = document.createElement('a');
+        webAuthorButton.href = getWebAuthorUrl(window.location.href);
+        webAuthorButton.className = 'btn btn-sm BtnGroup-item';
+        webAuthorButton.innerHTML = 'Oxygen XML Web Author';
+        webAuthorButton.target = '_blank';
+        webAuthorButton.id = 'walink';
+
+        return webAuthorButton;
+    }
+
+
+    var webAuthorButton = createButtonInFileActions();
+
+
+    function addButtonInFileActions() {
+        var file = document.querySelector('.file');
+        var file_actions = null;
+
+        try {
+            file_actions = file.querySelector('.file-actions');
+        } catch (error) {
             return;
         }
+    
+        // Add out button at the first position to GitHub button group.
+        // Check if we have another one before adding a new Web Author button.
+        if (file !== null && file_actions !== null) {
+            var btnGroup = file_actions.querySelector('.BtnGroup');
 
-        var url = content.childNodes[1].firstChild.href;
-        var extension = url.split('/').pop().split('.').pop();
-
-        if (extension === 'xml' || extension === 'dita' ||
-            extension === 'ditamap' || extension === 'ditaval') {
-
-            a.href = createOxyUrl(url);
-            var span = content.querySelector('.css-truncate.css-truncate-target');
-            span.style.maxWidth = '84%';
-
-            content.appendChild(a);
-
-            function onMouseLeave() {
-                span.style.maxWidth = '100%';
-                candidateRow.removeEventListener('mouseleave', onMouseLeave);
-                if (content.contains(a)) {
-                    a.parentElement.removeChild(a);
-                }
+            if (btnGroup.contains(webAuthorButton)) {
+                return;
             }
 
-            candidateRow.addEventListener('mouseleave', onMouseLeave);
-            var nav = document.querySelectorAll('.js-navigation-open');
-
-            nav.forEach(element => {
-                element.onclick = () => {
-                    table.classList.remove('wa-initialized');
-                    if (content.contains(a)) {
-                        a.parentElement.removeChild(a);
-                    }
-                }
-            });
+            // Appeding the newly created Web Author button.
+            btnGroup.insertBefore(webAuthorButton, btnGroup.firstChild);
         }
+    }
+
+
+    // Get the setted host from chrome storage.
+    var hostPart;
+    chrome.storage.sync.get(['host'], function (result) {
+        hostPart = result.host;
     });
-}
 
 
-function createButtonInFileActions() {
-    var a = document.createElement('a');
-    a.href = createOxyUrl(window.location.href);
-    a.className = 'btn btn-sm BtnGroup-item';
-    a.innerHTML = 'Open in XML Web Author';
-    a.target = '_blank';
-    a.id = 'walink';
+    function getWebAuthorUrl(url) {
+        var firstComponent = 'https://github.com';
+        var ghprotocol = 'gitgh://';
+        var queryPart = '?url=';
 
-    return a;
-}
+        url = url.replace(firstComponent, '');
+        var splitedUrl = url.split('/');
 
+        // Removing useless elemenets from array and build url for github document.
+        splitedUrl.length = 3;
 
-function addButtonInFileActions() {
-    var file = document.querySelector('.file');
-    var file_actions = null;
-
-    try {
-        file_actions = file.querySelector('.file-actions');
-    } catch (error) {
-        return;
-    }
-
-    if (file !== null && file_actions !== null) {
-        var btnGroup = file_actions.querySelector('.BtnGroup');
-
-        if (btnGroup.contains(btnGroup.querySelector('#walink'))) {
-            return;
+        for(var element of splitedUrl){
+            if (element !== '') {
+                firstComponent += '/' + element;
+                url = url.replace(element + '/', '');
+            }
         }
 
-        var a = createButtonInFileActions();
-        btnGroup.insertBefore(a, btnGroup.firstChild);
+        // Encode the document url twice for query part of Web Author url. 
+        firstComponent = encodeURIComponent(encodeURIComponent(firstComponent));
+
+        // Building the final Web Author url for our buttons.
+        var secondComponent = encodeURIComponent(url.replace('blob/', ''));
+        var webauthorUrl = hostPart + queryPart + encodeURIComponent(ghprotocol) + firstComponent + secondComponent;
+
+        return webauthorUrl;
     }
-}
-
-
-var host;
-chrome.storage.sync.get(['host'], function (result) {
-    host = result.host;
-});
-
-
-function createOxyUrl(url) {
-    const LEN = 3;
-    var firstComponent = 'https://github.com';
-    var ghprotocol = 'gitgh://';
-    var qurl = '?url=';
-
-    url = url.replace(firstComponent, '');
-    var splitUrl = url.split('/');
-
-    for (var i = 0; i < LEN; i++) {
-        if (splitUrl[i] !== '') {
-            firstComponent += '/' + splitUrl[i];
-            url = url.replace(splitUrl[i] + '/', '');
-        }
-    }
-
-    firstComponent = encodeURIComponent(encodeURIComponent(firstComponent));
-
-    var secondComponent = encodeURIComponent(url.replace('blob/', ''));
-    var oxyUrl = host + qurl + encodeURIComponent(ghprotocol) + firstComponent + secondComponent;
-
-    return oxyUrl;
-}
+}())
