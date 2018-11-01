@@ -6,6 +6,15 @@
     });
 
 
+    var supportedExtensions = {
+        xml: 'xml',
+        dita: 'dita',
+        ditamap: 'ditamap',
+        ditaval: 'ditaval',
+        xhtml: 'xhtml'
+    }
+
+
     function enhancePage() {
         var lastUrlFromTab = window.location.href.split('/').pop();
         var fileExtension = lastUrlFromTab.split('.');
@@ -16,9 +25,7 @@
         fileExtension = fileExtension.pop();
 
         // Add Web Author button only for opened files with these extensions.
-        if (fileExtension === 'xml' || fileExtension === 'dita' ||
-                fileExtension === 'ditamap' || fileExtension === 'ditaval' ||
-                    fileExtension === 'xhtml' || fileExtension === 'dbk') {
+        if (supportedExtensions.hasOwnProperty(fileExtension)) {
             addButtonInFileActions();
         }
     }
@@ -46,21 +53,21 @@
 
 
     function addEditButton(spanNavContent) {
-        removeEditButton();
-        spanNavContent.style.maxWidth = '84%';
+        removeEditButton(spanNavContent);
+        spanNavContent.style.maxWidth = '85%';
         spanNavContent.parentNode.appendChild(editButton);
     }
 
 
-    function removeEditButton() {
+    function removeEditButton(spanNavContent) {
         var oldEditButton = document.getElementById('wa-link');
         if (oldEditButton) {
             // Cleanup the parent of the old parent of the edit button.
             var oldButtonParent = oldEditButton.parentElement;
             if (oldButtonParent) {
-                oldButtonParent.style.maxWidth = '100%';
                 oldButtonParent.removeChild(oldEditButton)
             }
+            spanNavContent.style.maxWidth = '100%';
         }
     }
 
@@ -95,19 +102,18 @@
             var url = navigationContent.childNodes[1].firstChild.href;
             var fileExtension = url.split('/').pop().split('.').pop();
 
-            if (fileExtension === 'xml' || fileExtension === 'dita' ||
-                fileExtension === 'ditamap' || fileExtension === 'ditaval') {
+            if (supportedExtensions.hasOwnProperty(fileExtension)) {
 
                 editButton.href = getWebAuthorUrl(url);
 
-                // Get'.css-truncate.css-truncate-target' for button positioning.
+                // Get '.css-truncate.css-truncate-target' for button positioning.
                 var spanNavContent = navigationContent.querySelector('.css-truncate.css-truncate-target');
                 addEditButton(spanNavContent);
 
                 // Remove the Web Author button and 'mouseleave' event when mouse leave 'js-navigation-item'.
                 var onMouseLeave = () => {
                     candidateRow.removeEventListener('mouseleave', onMouseLeave);
-                        removeEditButton();
+                        removeEditButton(spanNavContent);
                 }
 
                 candidateRow.addEventListener('mouseleave', onMouseLeave);
@@ -128,25 +134,16 @@
     }
 
 
-    var webAuthorButton = createButtonInFileActions();
-
-
     function addButtonInFileActions() {
-        var file = document.querySelector('.file');
-        var file_actions = null;
+        var fileActions = document.querySelector('.file-actions');
+        var webAuthorButton = createButtonInFileActions();
 
-        try {
-            file_actions = file.querySelector('.file-actions');
-        } catch (error) {
-            return;
-        }
-    
         // Add out button at the first position to GitHub button group.
         // Check if we have another one before adding a new Web Author button.
-        if (file !== null && file_actions !== null) {
-            var btnGroup = file_actions.querySelector('.BtnGroup');
+        if (fileActions !== null) {
+            var btnGroup = fileActions.querySelector('.BtnGroup');
 
-            if (btnGroup.contains(webAuthorButton)) {
+            if (btnGroup.contains(fileActions.querySelector('#walink'))) {
                 return;
             }
 
@@ -157,15 +154,15 @@
 
 
     // Get the setted host from chrome storage.
-    var hostPart;
+    var webAuthorHost;
     chrome.storage.sync.get(['host'], function (result) {
-        hostPart = result.host;
+        webAuthorHost = result.host;
     });
 
 
     function getWebAuthorUrl(url) {
         var firstComponent = 'https://github.com';
-        var ghprotocol = 'gitgh://';
+        var ghProtocol = 'gitgh://';
         var queryPart = '?url=';
 
         url = url.replace(firstComponent, '');
@@ -176,7 +173,7 @@
 
         for(var element of splitedUrl){
             if (element !== '') {
-                firstComponent += '/' + element;
+                firstComponent += ('/' + element);
                 url = url.replace(element + '/', '');
             }
         }
@@ -186,7 +183,7 @@
 
         // Building the final Web Author url for our buttons.
         var secondComponent = encodeURIComponent(url.replace('blob/', ''));
-        var webauthorUrl = hostPart + queryPart + encodeURIComponent(ghprotocol) + firstComponent + secondComponent;
+        var webauthorUrl = webAuthorHost + queryPart + encodeURIComponent(ghProtocol) + firstComponent + secondComponent;
 
         return webauthorUrl;
     }

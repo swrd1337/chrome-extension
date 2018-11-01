@@ -12,6 +12,8 @@ chrome.runtime.onInstalled.addListener(function () {
 });
 
 
+// Google Chrome tab listener. 
+// Execute out content.js when tab url is equals with github url.
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     chrome.tabs.query({
         url: '*://github.com/*'
