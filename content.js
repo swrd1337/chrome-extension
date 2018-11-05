@@ -7,11 +7,11 @@
 
 
     var supportedExtensions = {
-        xml: 'xml',
-        dita: 'dita',
-        ditamap: 'ditamap',
-        ditaval: 'ditaval',
-        xhtml: 'xhtml'
+        xml: '.xml',
+        dita: '.dita',
+        ditamap: '.ditamap',
+        ditaval: '.ditaval',
+        xhtml: '.xhtml'
     }
 
 

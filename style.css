@@ -56,6 +56,11 @@
     margin-bottom: 20px;
 }
 
+#extension {
+    font-size: 14px;
+    color: #313131;
+}
+
 .ext-container {
     display: inline-block;
 }
