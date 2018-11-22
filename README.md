@@ -3,7 +3,9 @@
 Open supported documents from GitHub repositories directly in Oxygen XML Web Author.
 
 
-### Install 
+
+### Installing
+
 
 1) Go to ---> [chrome://extensions/](chrome://extensions/).
 
