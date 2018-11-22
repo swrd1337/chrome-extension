@@ -7,7 +7,7 @@ Open supported documents from GitHub repositories directly in Oxygen XML Web Aut
 ### Installing
 
 
-1) Go to ---> [chrome://extensions/](chrome://extensions/).
+1) Go to ---> ```chrome://extensions/```
 
 2) Turn On **Developer mode**.
 
