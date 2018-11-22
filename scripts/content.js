@@ -37,7 +37,7 @@
         webAuthorButton.title = 'Open with Oxygen XML Web Author.';
         webAuthorButton.target = '_blank';
 
-        var logoURL = chrome.extension.getURL('images/wapencil.png');
+        var logoURL = chrome.extension.getURL('images/wa-pencil.png');
         var pencilImg = document.createElement('img');
         pencilImg.src = logoURL;
         pencilImg.width = '14';

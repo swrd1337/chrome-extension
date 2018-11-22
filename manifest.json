@@ -1,7 +1,8 @@
 {
-    "name": "Github Web-Author",
-    "version": "1.0",
-    "description": "Open XML files from GitHub repos with Oxygen XML Web Author in one click.",
+    "name": "Oxygen XML Web Author",
+    "short_name": "Web Author",
+    "description": "The XML editor that helps your whole team engage in content creation",
+    "version": "0.01",
     "permissions": [
         "declarativeContent",
         "tabs",
@@ -11,7 +12,7 @@
         "https://*/*"
     ],
     "background": {
-        "scripts": ["background.js"],
+        "scripts": ["scripts/background.js"],
         "persistent": false
     },
     "content_scripts": [{
@@ -19,18 +20,21 @@
             "http://github.com/*",
             "https://github.com/*"
         ],
-        "css": ["style.css"],
-        "js": ["content.js"]
+        "css": ["styles/style.css"],
+        "js": ["scripts/content.js"]
     }],
+    "icons": {
+        "128": "images/web-author.png"
+    },
     "page_action": {
         "default_popup": "popup.html",
         "default_icon": {
-            "16": "images/webauthor.png",
-            "32": "images/webauthor.png",
-            "64": "images/webauthor.png",
-            "128": "images/webauthor.png"
+            "16": "images/web-author.png",
+            "32": "images/web-author.png",
+            "64": "images/web-author.png",
+            "128": "images/web-author.png"
         }
     },
-    "web_accessible_resources": ["images/wapencil.png"],
+    "web_accessible_resources": ["images/wa-pencil.png"],
     "manifest_version": 2
 }
