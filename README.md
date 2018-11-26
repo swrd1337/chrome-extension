@@ -17,7 +17,7 @@ Supported browsers: Google Chrome, Mozilla Firefox.
 
 3) Turn On **Developer mode**.
 
-4) Load extension with **Load unpacked** from folder where is **manifest.json**.
+4) Load extension with **Load unpacked** from chrome folder.
 
 Done.
 
