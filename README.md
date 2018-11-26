@@ -2,13 +2,36 @@
 
 Open supported documents from GitHub repositories directly in Oxygen XML Web Author.
 
+Supported browsers: Google Chrome, Mozilla Firefox.
 
 
-### Installing
+
+## Installing
 
 
-1) Go to ---> ```chrome://extensions/```
+### Google Chrome:
 
-2) Turn On **Developer mode**.
+1) ```git clone https://github.com/swrd1337/web-author-chrome-extension.git```
 
-3) Load extension with **Load unpacked**.
+2) Go to ---> ```chrome://extensions/```
+
+3) Turn On **Developer mode**.
+
+4) Load extension with **Load unpacked** from folder where is **manifest.json**.
+
+Done.
+
+
+### Mozilla Firefox:
+
+1) ```git clone https://github.com/swrd1337/web-author-chrome-extension.git```
+
+2) Install ```web-ext``` with **npm** if you doesn't.
+
+3) Open cmd|terminal|bash in firefox folder and write ```web-ext run```.
+
+Done.
+
+
+
+Whenever, you can pack this extension and load it manually.
