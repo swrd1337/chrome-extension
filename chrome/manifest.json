@@ -3,6 +3,7 @@
     "short_name": "Web Author",
     "description": "The XML editor that helps your whole team engage in content creation",
     "version": "0.01",
+    "manifest_version": 2,
     "permissions": [
         "declarativeContent",
         "tabs",
@@ -21,7 +22,7 @@
             "https://github.com/*"
         ],
         "css": ["styles/style.css"],
-        "js": ["scripts/content.js"]
+        "js": ["common/content.js"]
     }],
     "icons": {
         "128": "images/web-author.png"
@@ -35,6 +36,5 @@
             "128": "images/web-author.png"
         }
     },
-    "web_accessible_resources": ["images/wa-pencil.png"],
-    "manifest_version": 2
+    "web_accessible_resources": ["images/wa-pencil.png"]
 }
