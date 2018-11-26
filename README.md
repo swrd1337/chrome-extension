@@ -28,7 +28,7 @@ Done.
 
 2) Install ```web-ext``` with **npm** if you doesn't.
 
-3) Open cmd|terminal|bash in firefox folder and write ```web-ext run```.
+3) Open cmd | terminal | bash in the firefox folder and write ```web-ext run```.
 
 Done.
 
