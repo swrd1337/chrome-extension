@@ -2,8 +2,9 @@
     browser.runtime.onMessage.addListener(function (request, sender, sendRespone) {
         if (request.method === 'execute') {
             enhancePage();
-        }
-        sendRespone({respone: 'succes!'});
+            
+        } 
+        sendRespone({respone: 'OK'});
     });
 
     var supportedExtensions = {

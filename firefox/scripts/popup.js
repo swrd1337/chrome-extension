@@ -25,3 +25,48 @@ document.getElementById('save').addEventListener('click', function () {
 document.getElementById('cancel').addEventListener('click', function () {
     window.close();
 });
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    popupActivation(document, false);
+
+    browser.tabs.query({
+        url: '*://github.com/*',
+        active: true,
+        currentWindow: true
+    }, function(tabs) {
+        tabs.forEach(tab => {
+            if (tab.url.indexOf('://github.com/') !== -1) {
+                popupActivation(document, true);
+            }
+        });
+    })
+});
+
+var popContext = {
+    originalClass: 'primary-button extension-button',
+    blockClass: 'on-block extension-button',
+    originalSrc: 'images/web-author.png',
+    blockSrc: 'images/blocked-web-author.png',
+    originalInfo: 'Enter the URL of the Oxygen XML Web Author dashboard',
+    blockInfo: 'Only accessible on GitHub pages!'
+}
+
+function popupActivation(doc, condition) {
+    var hostInput = doc.querySelector('#host');
+    
+    hostInput.disabled = condition ? false : true;
+
+    var saveButton = doc.querySelector('#save');
+    
+    saveButton.disabled = condition ? false : true;
+    saveButton.className = condition ? popContext.originalClass : popContext.blockClass;
+
+    var image = doc.querySelector('#web-author-img');
+
+    image.src = condition ? popContext.originalSrc : popContext.blockSrc;
+
+    var extensionInfo = doc.querySelector('#extension-info');
+
+    extensionInfo.innerHTML = condition ? popContext.originalInfo : popContext.blockInfo;
+}

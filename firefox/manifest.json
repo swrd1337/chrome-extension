@@ -8,8 +8,7 @@
         "tabs",
         "webNavigation",
         "storage",
-        "http://*/*",
-        "https://*/*"
+        "*://github.com/*"
     ],
     "background": {
         "scripts": ["scripts/background.js"]

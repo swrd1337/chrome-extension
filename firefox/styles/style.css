@@ -44,6 +44,12 @@
     border-color: #204d74;
 }
 
+.on-block {
+    color: rgb(0, 0, 0);
+    background-color: lightgray;
+    border: 1px solid lightgray;
+}
+
 .button-container {
     text-align: right;
 }
