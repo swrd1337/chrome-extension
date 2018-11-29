@@ -1,8 +1,16 @@
 #popup-body {
     font-family: robotolight, Arial, Helvetica, sans-serif;
     background-color: #fff;
+}
+
+.ff-popup-body {
     width: 250px;
     height: 220px;
+}
+
+.gc-popup-body {
+    width: 250px;
+    height: 160px;
 }
 
 #web-author-img {
@@ -44,18 +52,12 @@
     border-color: #204d74;
 }
 
-.on-block {
-    color: rgb(0, 0, 0);
-    background-color: lightgray;
-    border: 1px solid lightgray;
-}
-
 .button-container {
     text-align: right;
 }
 
 .dialog-tittle {
-    font-size: 1.4em;
+    font-size: 22px;
     font-weight: normal;
     text-align: center;
     margin-top: 5px;

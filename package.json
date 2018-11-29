@@ -1,0 +1,16 @@
+{
+  "name": "build-extension",
+  "version": "0.0.1",
+  "description": "Build tool for Oxygen XML Web Author GitHub extension.",
+  "scripts": {
+    "test": "echo \"Nothing to test\"",
+    "chrome": "node build.js chrome",
+    "firefox": "node build.js firefox",
+    "fox-build-run": "node build.js firefox && cd firefox/ && web-ext run"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^7.0.1"
+  }
+}

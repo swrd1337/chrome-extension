@@ -22,7 +22,7 @@
             "https://github.com/*"
         ],
         "css": ["styles/style.css"],
-        "js": ["common/content.js"]
+        "js": ["scripts/content.js"]
     }],
     "icons": {
         "128": "images/web-author.png"

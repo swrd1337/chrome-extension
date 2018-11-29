@@ -1,6 +1,14 @@
 #popup-body {
     font-family: robotolight, Arial, Helvetica, sans-serif;
     background-color: #fff;
+}
+
+.ff-popup-body {
+    width: 250px;
+    height: 220px;
+}
+
+.gc-popup-body {
     width: 250px;
     height: 160px;
 }
@@ -49,7 +57,7 @@
 }
 
 .dialog-tittle {
-    font-size: 1.8em;
+    font-size: 22px;
     font-weight: normal;
     text-align: center;
     margin-top: 5px;
@@ -57,7 +65,7 @@
 }
 
 #extension {
-    font-size: 14px;
+    font-size: 12px;
     color: #313131;
 }
 
@@ -91,7 +99,7 @@
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 13px;
+    font-size: 12px;
     padding: 6px 8px;
     width: 100%;
 }

@@ -1,11 +1,18 @@
 (function () {
-    browser.runtime.onMessage.addListener(function (request, sender, sendRespone) {
+    addBrowserListener(function (request, sender, sendRespone) {
         if (request.method === 'execute') {
-            enhancePage();
-            
+            enhancePage();            
         } 
         sendRespone({respone: 'OK'});
-    });
+    })
+
+    function addBrowserListener(listener) {
+        if (typeof chrome !== 'undefined') {
+            chrome.runtime.onMessage.addListener(listener);
+        } else {
+            browser.runtime.onMessage.addListener(listener);
+        }
+    }
 
     var supportedExtensions = {
         xml: '.xml',
@@ -30,6 +37,12 @@
         }
     }
 
+    function getPencilImage(imgUrl) {
+        if (typeof chrome !== 'undefined') {
+            return chrome.extension.getURL(imgUrl);
+        } 
+        return browser.extension.getURL(imgUrl);
+    }
 
     function createEditButton() {
         var webAuthorButton = document.createElement('a');
@@ -37,7 +50,7 @@
         webAuthorButton.title = 'Open with Oxygen XML Web Author.';
         webAuthorButton.target = '_blank';
 
-        var logoURL = browser.extension.getURL('images/wa-pencil.png');
+        var logoURL = getPencilImage('images/wa-pencil.png');
         var pencilImg = document.createElement('img');
         pencilImg.src = logoURL;
         pencilImg.width = '14';
@@ -48,16 +61,13 @@
         return webAuthorButton;
     }
 
-
     var editButton = createEditButton();
-
 
     function addEditButton(spanNavContent) {
         removeEditButton(spanNavContent);
         spanNavContent.style.maxWidth = '85%';
         spanNavContent.parentNode.appendChild(editButton);
     }
-
 
     function removeEditButton(spanNavContent) {
         var oldEditButton = document.getElementById('wa-link');
@@ -102,7 +112,6 @@
             var fileExtension = url.split('/').pop().split('.').pop();
 
             if (supportedExtensions.hasOwnProperty(fileExtension)) {
-
                 editButton.href = getWebAuthorUrl(url);
 
                 // Get '.css-truncate.css-truncate-target' for button positioning.
@@ -120,7 +129,6 @@
         });
     }
 
-
     function createButtonInFileActions() {
         var webAuthorButton = document.createElement('a');
         webAuthorButton.href = getWebAuthorUrl(window.location.href);
@@ -131,7 +139,6 @@
 
         return webAuthorButton;
     }
-
 
     function addButtonInFileActions() {
         var fileActions = document.querySelector('.file-actions');
@@ -151,13 +158,19 @@
         }
     }
 
-
     // Get the setted host from browser storage.
-    var webAuthorHost;
-   
-    browser.storage.sync.get('value').then(function(item) {
+    var webAuthorHost;   
+    getWebAuthorHost(function (item) {
         webAuthorHost = item.value.host;
     });
+
+    function getWebAuthorHost (fn) {
+        if (typeof chrome !== 'undefined') {
+            chrome.storage.sync.get('value', fn);
+        } else {
+            browser.storage.sync.get('value', fn);
+        }
+    }
 
     function getWebAuthorUrl(url) {
         var firstComponent = 'https://github.com';
@@ -179,11 +192,10 @@
 
         // Encode the document url twice for query part of Web Author url. 
         firstComponent = encodeURIComponent(encodeURIComponent(firstComponent));
-
         // Building the final Web Author url for our buttons.
         var secondComponent = encodeURIComponent(url.replace('blob/', ''));
         var webauthorUrl = webAuthorHost + queryPart + encodeURIComponent(ghProtocol) + firstComponent + secondComponent;
 
         return webauthorUrl;
     }
-}())
+}());
