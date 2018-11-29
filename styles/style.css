@@ -52,8 +52,15 @@
     border-color: #204d74;
 }
 
-.button-container {
+.action-container {
     text-align: right;
+}
+
+#help-icon {
+    width: 16px;
+    height: 16px;
+    margin-top: 30px;
+    position: absolute;
 }
 
 .dialog-tittle {

@@ -31,7 +31,7 @@ function extensionBuilder(path, ext) {
 
 function errorHandler(error) {
     if (error) {
-        return console.log(error);
+        return console.log(`[ERROR] ---> ${error}`);
     } 
     console.log('[COPY] ---> Done!');
 }
