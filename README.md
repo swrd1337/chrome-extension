@@ -13,11 +13,15 @@ Supported browsers: Google Chrome, Mozilla Firefox.
 
 1) ```git clone https://github.com/swrd1337/web-author-chrome-extension.git```
 
-2) Go to ---> ```chrome://extensions/```
+2) Go to root directory.
 
-3) Turn On **Developer mode**.
+3) Open **cmd** | **terminal** | **bash** and run ```npm run chrome```.
 
-4) Load extension with **Load unpacked** from chrome folder.
+4) Go to ---> ```chrome://extensions/```
+
+5) Turn On **Developer mode**.
+
+6) Load extension with **Load unpacked** from chrome folder.
 
 Done.
 
@@ -26,12 +30,15 @@ Done.
 
 1) ```git clone https://github.com/swrd1337/web-author-chrome-extension.git```
 
-2) Install ```web-ext``` with **npm** if you doesn't.
+2) Go to root directory.
 
-3) Open cmd | terminal | bash in the firefox folder and write ```web-ext run```.
+3) Open **cmd** | **terminal** | **bash** and run ```npm run firefox``` or ```npm run fox-build-run``` (run after building).
+
+--- If you decided only for build without running ---
+
+4) Open **cmd** | **terminal** | **bash** in the firefox folder and write ```web-ext run```.
 
 Done.
-
 
 
 Whenever, you can pack this extension and load it manually.
