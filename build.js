@@ -2,8 +2,13 @@ let fs = require('fs-extra');
 
 const CHROME = 'chrome';
 const FIREFOX = 'firefox';
+const TARGET = 'target';
 
 let chromeOrFirefox = '';
+
+if (!fs.existsSync(`/${TARGET}`)) {
+    fs.mkdir(TARGET, errorHandler);
+}
 
 process.argv.forEach((val, index) => {
     if (index === 2) {
@@ -17,21 +22,24 @@ if (chromeOrFirefox === CHROME) {
     extensionBuilder(FIREFOX, 'ff');
 }
 
-if (!fs.existsSync(`/${chromeOrFirefox}`)) {
-    fs.mkdir(chromeOrFirefox, errorHandler);
+if (!fs.existsSync(`${TARGET}/${chromeOrFirefox}`)) {
+    fs.mkdir(`${TARGET}/${chromeOrFirefox}`, errorHandler);
 }
 
 function extensionBuilder(path, ext) {
-    fs.copy('scripts', `${path}/scripts`, errorHandler);
-    fs.copy('images', `${path}/images`, errorHandler);
-    fs.copy('styles', `${path}/styles`, errorHandler);
-    fs.copySync('./popup.html', `${path}/popup.html`);
-    fs.copySync(`./${ext}-manifest.json`, `./${path}/manifest.json`);
+    fs.copy('scripts', `${TARGET}/${path}/scripts`, errorHandler);
+    fs.copy('images', `${TARGET}/${path}/images`, errorHandler);
+    fs.copy('styles', `${TARGET}/${path}/styles`, errorHandler);
+    fs.copySync('./popup.html', `${TARGET}/${path}/popup.html`);
+    fs.copySync(`./${ext}-manifest.json`, `./${TARGET}/${path}/manifest.json`);
 }
 
 function errorHandler(error) {
     if (error) {
-        return console.log(error);
+        if (error.code === 'EEXIST') {
+            return console.log(`${error}`);
+        }
+        return console.log(`Failed to create directory: ${error}`);
     } 
     console.log('[COPY] ---> Done!');
 }

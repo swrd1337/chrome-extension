@@ -10,16 +10,6 @@ process.argv.forEach((val, index) => {
 });
 
 let target = 'target';
-
-if (!fs.existsSync(`/${target}`)) {
-    fs.mkdir(target, e => {
-        if (e) {
-            return console.log(e);
-        }
-        console.log('[DONE] ---> making dir.');
-    });
-}
-
 let output = fs.createWriteStream(`${target}/${browser}.zip`);
 
 let archive = archiver('zip', {
@@ -38,5 +28,5 @@ archive.on('error', function(err){
 });
 
 archive.pipe(output);
-archive.directory(`${browser}/`, false);
+archive.directory(`target/${browser}/`, false);
 archive.finalize();
