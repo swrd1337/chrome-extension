@@ -1,8 +1,8 @@
 // Help us to check if browser is chrome or not.
-var isChrome = chrome.declarativeContent;
+let IS_CHROME = chrome.declarativeContent;
 
 // Execute our content.js when tab url is equal with github url.
-if (isChrome !== undefined) {
+if (IS_CHROME !== undefined) {
     chrome.tabs.onUpdated.addListener(tabListener);
     chrome.runtime.onInstalled.addListener(onChromeStart);
 } else {
@@ -10,13 +10,13 @@ if (isChrome !== undefined) {
 }
 
 function tabListener() {
-    var tabOption = {
+    let tabOption = {
         url: '*://github.com/*',
         active: true,
         currentWindow: true
     }
     
-    if (isChrome !== undefined) {
+    if (IS_CHROME !== undefined) {
         chrome.tabs.query(tabOption, tabQuery);
     } else {
         browser.tabs.query(tabOption, tabQuery);
@@ -25,9 +25,9 @@ function tabListener() {
 
 function tabQuery(tabs) {
     tabs.forEach(function (tab) {
-        var option = {method: 'execute'};
+        let option = {method: 'execute'};
 
-        if (isChrome !== undefined) {
+        if (IS_CHROME !== undefined) {
             chrome.tabs.sendMessage(tab.id, option, responseHandler);
         } else {
             browser.tabs.sendMessage(tab.id, option, responseHandler);

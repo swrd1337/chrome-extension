@@ -1,13 +1,13 @@
 // Help us to check if browser is chrome or not.
-var isChrome = chrome.declarativeContent;
+const IS_CHROME = chrome.declarativeContent;
 
 // Set the last Web Author url in the input form.
 document.getElementById('save').addEventListener('click', function () {
-    var value = {
+    let value = {
         host: document.getElementById('host').value
     };
 
-    if (isChrome !== undefined) {
+    if (IS_CHROME !== undefined) {
         chrome.storage.sync.set({value});        
     } else {
         browser.storage.sync.set({value});
@@ -20,7 +20,7 @@ document.getElementById('save').addEventListener('click', function () {
 });
 
 function queryTabs(options, fn) {
-    if (isChrome !== undefined) {
+    if (IS_CHROME !== undefined) {
         chrome.tabs.query(options, fn);
     } else {
         browser.tabs.query(options, fn);
@@ -28,7 +28,7 @@ function queryTabs(options, fn) {
 }
 
 function tabsUtil(tabs) {
-    if (isChrome !== undefined) {
+    if (IS_CHROME !== undefined) {
         chrome.tabs.update(tabs[0].id, {
             url: tabs[0].url
         });    
@@ -46,8 +46,8 @@ document.getElementById('cancel').addEventListener('click', function () {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    var body = document.querySelector('#popup-body');
-    if (isChrome !== undefined) {
+    let body = document.querySelector('#popup-body');
+    if (IS_CHROME !== undefined) {
         body.className = 'gc-popup-body';
     } else {
         body.className = 'ff-popup-body';

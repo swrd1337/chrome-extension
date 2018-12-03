@@ -11,7 +11,7 @@ process.argv.forEach((val, index) => {
 
 let target = 'target';
 
-if (fs.existsSync(`/${target}`)) {
+if (!fs.existsSync(`/${target}`)) {
     fs.mkdir(target, e => {
         if (e) {
             return console.log(e);
@@ -21,6 +21,7 @@ if (fs.existsSync(`/${target}`)) {
 }
 
 let output = fs.createWriteStream(`${target}/${browser}.zip`);
+
 let archive = archiver('zip', {
     zlib: {
         level: 9
@@ -37,9 +38,5 @@ archive.on('error', function(err){
 });
 
 archive.pipe(output);
-
-
 archive.directory(`${browser}/`, false);
-
-
 archive.finalize();

@@ -14,7 +14,7 @@
         }
     }
 
-    var supportedExtensions = {
+    let supportedExtensions = {
         xml: '.xml',
         dita: '.dita',
         ditamap: '.ditamap',
@@ -23,8 +23,8 @@
     }
 
     function enhancePage() {
-        var lastUrlFromTab = window.location.href.split('/').pop();
-        var fileExtension = lastUrlFromTab.split('.');
+        let lastUrlFromTab = window.location.href.split('/').pop();
+        let fileExtension = lastUrlFromTab.split('.');
 
         // Add Web Author button in every directory.
         addButtonsInTable();
@@ -45,13 +45,13 @@
     }
 
     function createEditButton() {
-        var webAuthorButton = document.createElement('a');
+        let webAuthorButton = document.createElement('a');
         webAuthorButton.id = 'wa-link';
         webAuthorButton.title = 'Open with Oxygen XML Web Author.';
         webAuthorButton.target = '_blank';
 
-        var logoURL = getPencilImage('images/wa-pencil.png');
-        var pencilImg = document.createElement('img');
+        let logoURL = getPencilImage('images/wa-pencil.png');
+        let pencilImg = document.createElement('img');
         pencilImg.src = logoURL;
         pencilImg.width = '14';
         pencilImg.height = '14';
@@ -61,7 +61,7 @@
         return webAuthorButton;
     }
 
-    var editButton = createEditButton();
+    let editButton = createEditButton();
 
     function addEditButton(spanNavContent) {
         removeEditButton(spanNavContent);
@@ -70,10 +70,10 @@
     }
 
     function removeEditButton(spanNavContent) {
-        var oldEditButton = document.getElementById('wa-link');
+        let oldEditButton = document.getElementById('wa-link');
         if (oldEditButton) {
             // Cleanup the parent of the old parent of the edit button.
-            var oldButtonParent = oldEditButton.parentElement;
+            let oldButtonParent = oldEditButton.parentElement;
             if (oldButtonParent) {
                 oldButtonParent.removeChild(oldEditButton)
             }
@@ -83,7 +83,7 @@
 
     function addButtonsInTable() {
         // Stable container where we add 'mouseover' event listener.
-        var repoContainer = document.querySelector('#js-repo-pjax-container');
+        let repoContainer = document.querySelector('#js-repo-pjax-container');
 
         if (repoContainer === null) {
             return;
@@ -92,7 +92,7 @@
         repoContainer.classList.add('wa-initialized');
 
         repoContainer.addEventListener('mouseover', e => {
-            var candidateRow = e.target;
+            let candidateRow = e.target;
 
             // Moving from the '#js-repo-pjax-container' to '.js-navigation-item' where we add Web Author button.
             while (!candidateRow.classList || !candidateRow.classList.contains('js-navigation-item')) {
@@ -103,23 +103,23 @@
             }
 
             // Get the '.content' element from current candidateRow and check if already has WebAuthor button.
-            var navigationContent = candidateRow.querySelector('.content');
+            let navigationContent = candidateRow.querySelector('.content');
             if (!navigationContent || navigationContent.contains(editButton)) {
                 return;
             }
 
-            var url = navigationContent.childNodes[1].firstChild.href;
-            var fileExtension = url.split('/').pop().split('.').pop();
+            let url = navigationContent.childNodes[1].firstChild.href;
+            let fileExtension = url.split('/').pop().split('.').pop();
 
             if (supportedExtensions.hasOwnProperty(fileExtension)) {
                 editButton.href = getWebAuthorUrl(url);
 
                 // Get '.css-truncate.css-truncate-target' for button positioning.
-                var spanNavContent = navigationContent.querySelector('.css-truncate.css-truncate-target');
+                let spanNavContent = navigationContent.querySelector('.css-truncate.css-truncate-target');
                 addEditButton(spanNavContent);
 
                 // Remove the Web Author button and 'mouseleave' event when mouse leave 'js-navigation-item'.
-                var onMouseLeave = () => {
+                let onMouseLeave = () => {
                     candidateRow.removeEventListener('mouseleave', onMouseLeave);
                         removeEditButton(spanNavContent);
                 }
@@ -130,7 +130,7 @@
     }
 
     function createButtonInFileActions() {
-        var webAuthorButton = document.createElement('a');
+        let webAuthorButton = document.createElement('a');
         webAuthorButton.href = getWebAuthorUrl(window.location.href);
         webAuthorButton.className = 'btn btn-sm BtnGroup-item';
         webAuthorButton.innerHTML = 'Oxygen XML Web Author';
@@ -141,13 +141,13 @@
     }
 
     function addButtonInFileActions() {
-        var fileActions = document.querySelector('.file-actions');
-        var webAuthorButton = createButtonInFileActions();
+        let fileActions = document.querySelector('.file-actions');
+        let webAuthorButton = createButtonInFileActions();
 
         // Add out button at the first position to GitHub button group.
         // Check if we have another one before adding a new Web Author button.
         if (fileActions !== null) {
-            var btnGroup = fileActions.querySelector('.BtnGroup');
+            let btnGroup = fileActions.querySelector('.BtnGroup');
 
             if (btnGroup.contains(fileActions.querySelector('#walink'))) {
                 return;
@@ -159,7 +159,7 @@
     }
 
     // Get the setted host from browser storage.
-    var webAuthorHost;   
+    let webAuthorHost;   
     getWebAuthorHost(function (item) {
         webAuthorHost = item.value.host;
     });
@@ -173,17 +173,17 @@
     }
 
     function getWebAuthorUrl(url) {
-        var firstComponent = 'https://github.com';
-        var ghProtocol = 'gitgh://';
-        var queryPart = '?url=';
+        let firstComponent = 'https://github.com';
+        let ghProtocol = 'gitgh://';
+        let queryPart = '?url=';
 
         url = url.replace(firstComponent, '');
-        var splitedUrl = url.split('/');
+        let splitedUrl = url.split('/');
 
         // Removing useless elemenets from array and build url for github document.
         splitedUrl.length = 3;
 
-        for(var element of splitedUrl){
+        for(const element of splitedUrl){
             if (element !== '') {
                 firstComponent += ('/' + element);
                 url = url.replace(element + '/', '');
@@ -193,8 +193,8 @@
         // Encode the document url twice for query part of Web Author url. 
         firstComponent = encodeURIComponent(encodeURIComponent(firstComponent));
         // Building the final Web Author url for our buttons.
-        var secondComponent = encodeURIComponent(url.replace('blob/', ''));
-        var webauthorUrl = webAuthorHost + queryPart + encodeURIComponent(ghProtocol) + firstComponent + secondComponent;
+        let secondComponent = encodeURIComponent(url.replace('blob/', ''));
+        let webauthorUrl = webAuthorHost + queryPart + encodeURIComponent(ghProtocol) + firstComponent + secondComponent;
 
         return webauthorUrl;
     }

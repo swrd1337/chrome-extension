@@ -1,8 +1,8 @@
 // Help us to check if browser is chrome or not.
-var isChrome = chrome.declarativeContent;
+let IS_CHROME = chrome.declarativeContent;
 
 function setExtensionHost(fn) {
-    if (isChrome !== undefined) {
+    if (IS_CHROME !== undefined) {
         chrome.storage.sync.get('value', fn);
     } else {
         browser.storage.sync.get('value', fn);
@@ -11,7 +11,7 @@ function setExtensionHost(fn) {
 
 setExtensionHost(function(item) {
     if (item.value !== undefined && item.value !== '') {
-        var displayHost = item.value.host;
+        let displayHost = item.value.host;
         document.getElementById('host').value = displayHost;
         updateIconHref(displayHost);
     } else {

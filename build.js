@@ -17,7 +17,7 @@ if (chromeOrFirefox === CHROME) {
     extensionBuilder(FIREFOX, 'ff');
 }
 
-if (fs.existsSync(`/${chromeOrFirefox}`)) {
+if (!fs.existsSync(`/${chromeOrFirefox}`)) {
     fs.mkdir(chromeOrFirefox, errorHandler);
 }
 
