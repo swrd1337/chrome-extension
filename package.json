@@ -6,11 +6,15 @@
     "test": "echo \"Nothing to test\"",
     "chrome": "node build.js chrome",
     "firefox": "node build.js firefox",
-    "fox-build-run": "node build.js firefox && cd firefox/ && web-ext run"
+    "fox-br-ext": "node build.js firefox && cd firefox/ && web-ext run",
+    "pack-chrome": "npm run chrome && node pack.js chrome",
+    "pack-firefox": "npm run firefox && node pack.js firefox",
+    "pack-ext": "npm run pack-chrome && npm run pack-firefox"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "archiver": "^3.0.0",
     "fs-extra": "^7.0.1"
   }
 }

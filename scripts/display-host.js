@@ -10,9 +10,8 @@ function setExtensionHost(fn) {
 }
 
 setExtensionHost(function(item) {
-    var displayHost = item.value.host;
-
-    if (displayHost !== undefined && displayHost !== '') {
+    if (item.value !== undefined && item.value !== '') {
+        var displayHost = item.value.host;
         document.getElementById('host').value = displayHost;
         updateIconHref(displayHost);
     } else {
