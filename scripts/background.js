@@ -1,5 +1,5 @@
 // Help us to check if browser is chrome or not.
-let IS_CHROME = chrome.declarativeContent;
+const IS_CHROME = chrome.declarativeContent;
 
 // Execute our content.js when tab url is equal with github url.
 if (IS_CHROME !== undefined) {

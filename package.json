@@ -6,7 +6,7 @@
     "test": "echo \"Nothing to test\"",
     "chrome": "node build.js chrome",
     "firefox": "node build.js firefox",
-    "fox-br-ext": "node build.js firefox && cd firefox/ && web-ext run",
+    "fox-run": "node build.js firefox && cd target/firefox/ && web-ext run",
     "pack-chrome": "npm run chrome && node pack.js chrome",
     "pack-firefox": "npm run firefox && node pack.js firefox",
     "pack-ext": "npm run pack-chrome && npm run pack-firefox"
@@ -16,5 +16,9 @@
   "dependencies": {
     "archiver": "^3.0.0",
     "fs-extra": "^7.0.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-iife": "^0.4.0"
   }
 }

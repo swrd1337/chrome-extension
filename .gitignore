@@ -3,3 +3,4 @@ node_modules/
 firefox/
 chrome/
 target/
+package-lock.json

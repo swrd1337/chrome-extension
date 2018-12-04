@@ -1,5 +1,5 @@
 // Help us to check if browser is chrome or not.
-let IS_CHROME = chrome.declarativeContent;
+const IS_CHROME = chrome.declarativeContent;
 
 function setExtensionHost(fn) {
     if (IS_CHROME !== undefined) {

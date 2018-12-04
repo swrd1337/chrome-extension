@@ -1,3 +1,6 @@
+var gulp = require('gulp')
+require('./gulpfile');
+
 let fs = require('fs-extra');
 
 const CHROME = 'chrome';
@@ -27,7 +30,7 @@ if (!fs.existsSync(`${TARGET}/${chromeOrFirefox}`)) {
 }
 
 function extensionBuilder(path, ext) {
-    fs.copy('scripts', `${TARGET}/${path}/scripts`, errorHandler);
+    gulp.start('ext-script');
     fs.copy('images', `${TARGET}/${path}/images`, errorHandler);
     fs.copy('styles', `${TARGET}/${path}/styles`, errorHandler);
     fs.copySync('./popup.html', `${TARGET}/${path}/popup.html`);
@@ -36,10 +39,8 @@ function extensionBuilder(path, ext) {
 
 function errorHandler(error) {
     if (error) {
-        if (error.code === 'EEXIST') {
-            return console.log(`${error}`);
-        }
-        return console.log(`Failed to create directory: ${error}`);
+        return console.log(`${error}`);
     } 
-    console.log('[COPY] ---> Done!');
+    console.log('[COPY] - Done!');
 }
+
