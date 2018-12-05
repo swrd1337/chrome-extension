@@ -10,13 +10,13 @@ Supported file formats: xml, dita, ditamap, ditaval, xhtml.
 
 1) Enter Oxygen XML Web Author dashboard in input file.
 
-![Screenshot](docs/example.png)
+![Screenshot](docs/ex.png)
 
 2) Open the GitHub repository with wanted documents and click Web Author pencil.
 
-![Screenshot](docs/example-1.png)
+![Screenshot](docs/ex1.png)
 
-![Screenshot](docs/example-2.png)
+![Screenshot](docs/ex2.png)
 
 
 ## Instalation
