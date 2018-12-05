@@ -4,41 +4,31 @@ Open supported documents from GitHub repositories directly in Oxygen XML Web Aut
 
 Supported browsers: Google Chrome, Mozilla Firefox.
 
+Supported file formats: xml, dita, ditamap, ditaval, xhtml.
+
+## How to use
+
+1) Enter Oxygen XML Web Author dashboard in input file.
+
+![Screenshot](docs/example.png)
+
+2) Open the GitHub repository with wanted documents and click Web Author pencil.
+
+![Screenshot](docs/example-1.png)
+
+![Screenshot](docs/example-2.png)
 
 
-## Installing
+## Instalation
+
+### Chrome Web Store  
+[![Facebook Notifier available in the Chrome Web Store](https://developer.chrome.com/webstore/images/ChromeWebStore_BadgeWBorder_v2_206x58.png)](#)
+
+### Mozilla Add-ons
+[![Facebook Notifier available in Mozilla Add-ons](https://addons.cdn.mozilla.net/static/img/addons-buttons/AMO-button_1.png)](#)
 
 
-### Google Chrome:
-
-1) ```git clone https://github.com/swrd1337/web-author-chrome-extension.git```
-
-2) Go to root directory.
-
-3) Open **cmd** | **terminal** | **bash** and run ```npm run chrome```.
-
-4) Go to ---> ```chrome://extensions/```
-
-5) Turn On **Developer mode**.
-
-6) Load extension with **Load unpacked** from chrome folder.
-
-Done.
+## ![Developers](docs/DEV.md)
 
 
-### Mozilla Firefox:
 
-1) ```git clone https://github.com/swrd1337/web-author-chrome-extension.git```
-
-2) Go to root directory.
-
-3) Open **cmd** | **terminal** | **bash** and run ```npm run firefox``` or ```npm run fox-build-run``` (run after building).
-
---- If you decided only for build without running ---
-
-4) Open **cmd** | **terminal** | **bash** in the firefox folder and write ```web-ext run```.
-
-Done.
-
-
-Whenever, you can pack this extension and load it manually.
