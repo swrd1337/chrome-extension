@@ -102,6 +102,14 @@
     border-radius: 3px;
 }
 
+#wa-link-icon {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-right: 4px;
+    position: relative;
+}
+
 #host {
     color: #515151;
     background-color: white;

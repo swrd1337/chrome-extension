@@ -43,17 +43,23 @@ function getPencilImage(imgUrl) {
     return browser.extension.getURL(imgUrl);
 }
 
+function createPencilImage() {
+    let logoURL = getPencilImage('images/wa-pencil.png');
+    let pencilImg = document.createElement('img');
+    pencilImg.src = logoURL;
+    pencilImg.width = '14';
+    pencilImg.height = '14';
+
+    return pencilImg;
+}
+
 function createEditButton() {
     let webAuthorButton = document.createElement('a');
     webAuthorButton.id = 'wa-link';
     webAuthorButton.title = 'Open with Oxygen XML Web Author.';
     webAuthorButton.target = '_blank';
 
-    let logoURL = getPencilImage('images/wa-pencil.png');
-    let pencilImg = document.createElement('img');
-    pencilImg.src = logoURL;
-    pencilImg.width = '14';
-    pencilImg.height = '14';
+    let pencilImg = createPencilImage(); 
 
     webAuthorButton.appendChild(pencilImg);
 
@@ -132,7 +138,10 @@ function createButtonInFileActions() {
     let webAuthorButton = document.createElement('a');
     webAuthorButton.href = getWebAuthorUrl(window.location.href);
     webAuthorButton.className = 'btn btn-sm BtnGroup-item';
-    webAuthorButton.innerHTML = 'Edit in Web Author';
+
+    let imgUrl = getPencilImage('images/wa-pencil.png');
+
+    webAuthorButton.innerHTML = `<img id="wa-link-icon" src="${imgUrl}"/>Edit in Web Author`;
     webAuthorButton.target = '_blank';
     webAuthorButton.id = 'walink';
 
@@ -160,7 +169,10 @@ function addButtonInFileActions() {
 // Get the setted host from browser storage.
 let webAuthorHost;   
 getWebAuthorHost(function (item) {
-    webAuthorHost = item.value.host;
+    if (item.value !== undefined) {
+       return webAuthorHost = item.value.host;
+    }
+    webAuthorHost = '#';
 });
 
 function getWebAuthorHost (fn) {
