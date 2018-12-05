@@ -16,6 +16,8 @@ Supported file formats: xml, dita, ditamap, ditaval, xhtml.
 
 ![Screenshot](docs/ex1.png)
 
+or open the document and click ```Edit in Web Author```
+
 ![Screenshot](docs/ex2.png)
 
 
