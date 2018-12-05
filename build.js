@@ -1,7 +1,7 @@
-var gulp = require('gulp')
-require('./gulpfile');
-
+let gulp = require('gulp')
 let fs = require('fs-extra');
+
+require('./gulpfile');
 
 const CHROME = 'chrome';
 const FIREFOX = 'firefox';
@@ -18,7 +18,6 @@ process.argv.forEach((val, index) => {
         chromeOrFirefox = val;
     }
 });
-
 
 if (!fs.existsSync(`${TARGET}/${chromeOrFirefox}`)) {
     fs.mkdir(`${TARGET}/${chromeOrFirefox}`, errorHandler);

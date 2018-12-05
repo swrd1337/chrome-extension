@@ -1,15 +1,12 @@
 let gulp = require('gulp');
 let iife = require('gulp-iife');
- 
-const CHROME_PATH = './target/chrome/scripts';
-const FIREFOX_PATH = './target/firefox/scripts';
 
 gulp.task('chrome', function() {
-    return gulpScripts(CHROME_PATH);
+    return gulpScripts('./target/chrome/scripts');
 });
 
 gulp.task('firefox', function() {
-    return gulpScripts(FIREFOX_PATH);
+    return gulpScripts('./target/firefox/scripts');
 });
 
 function gulpScripts(path) {

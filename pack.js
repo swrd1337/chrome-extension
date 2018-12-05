@@ -9,8 +9,7 @@ process.argv.forEach((val, index) => {
     }
 });
 
-let target = 'target';
-let output = fs.createWriteStream(`${target}/${browser}.zip`);
+let output = fs.createWriteStream(`target/${browser}.zip`);
 
 let archive = archiver('zip', {
     zlib: {
