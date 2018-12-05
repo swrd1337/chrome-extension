@@ -28,7 +28,7 @@ Supported file formats: xml, dita, ditamap, ditaval, xhtml.
 [![Facebook Notifier available in Mozilla Add-ons](https://addons.cdn.mozilla.net/static/img/addons-buttons/AMO-button_1.png)](#)
 
 
-## ![Developers](docs/DEV.md)
+## [Developers](docs/DEV.md)
 
 
 
