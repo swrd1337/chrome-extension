@@ -5,7 +5,7 @@
 
 .ff-popup-body {
     width: 250px;
-    height: 220px;
+    height: 215px;
 }
 
 .gc-popup-body {
@@ -29,7 +29,7 @@
 .extension-button {
     font-size: 12px;
     background-color: white;
-    color: black;
+    color: #4d4d4d;
     border: 1px solid lightgray;
     border-radius: 4px;
     margin-top: 10px;
@@ -57,23 +57,25 @@
 }
 
 #help-icon {
-    width: 16px;
-    height: 16px;
-    margin-top: 34px;
+    margin: 30px 0 0 3px;
     position: absolute;
 }
 
 .dialog-tittle {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: normal;
     text-align: center;
     margin-top: 5px;
     margin-bottom: 15px;
 }
 
+#edit {
+    font-size: 17px;
+}
+
 #extension {
     font-size: 12px;
-    color: #313131;
+    color: #696969cc;
 }
 
 .extension-container {

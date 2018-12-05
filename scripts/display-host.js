@@ -13,12 +13,5 @@ setExtensionHost(function(item) {
     if (item.value !== undefined && item.value !== '') {
         let displayHost = item.value.host;
         document.getElementById('host').value = displayHost;
-        updateIconHref(displayHost);
-    } else {
-        updateIconHref('https://www.oxygenxml.com/xml_web_author.html');
-    }   
+    }
 });
-
-function updateIconHref(host) {
-    document.getElementById('oxygen-link').href = host;
-}

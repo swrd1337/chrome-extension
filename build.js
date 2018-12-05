@@ -19,22 +19,23 @@ process.argv.forEach((val, index) => {
     }
 });
 
+
+if (!fs.existsSync(`${TARGET}/${chromeOrFirefox}`)) {
+    fs.mkdir(`${TARGET}/${chromeOrFirefox}`, errorHandler);
+}
+
 if (chromeOrFirefox === CHROME) {
     extensionBuilder(CHROME, 'gc');
 } else {
     extensionBuilder(FIREFOX, 'ff');
 }
 
-if (!fs.existsSync(`${TARGET}/${chromeOrFirefox}`)) {
-    fs.mkdir(`${TARGET}/${chromeOrFirefox}`, errorHandler);
-}
-
-function extensionBuilder(path, ext) {
-    gulp.start('ext-script');
-    fs.copy('images', `${TARGET}/${path}/images`, errorHandler);
-    fs.copy('styles', `${TARGET}/${path}/styles`, errorHandler);
-    fs.copySync('./popup.html', `${TARGET}/${path}/popup.html`);
-    fs.copySync(`./${ext}-manifest.json`, `./${TARGET}/${path}/manifest.json`);
+function extensionBuilder(browser, ext) {
+    gulp.start(browser);
+    fs.copy('images', `${TARGET}/${browser}/images`, errorHandler);
+    fs.copy('styles', `${TARGET}/${browser}/styles`, errorHandler);
+    fs.copySync('./popup.html', `${TARGET}/${browser}/popup.html`);
+    fs.copySync(`./${ext}-manifest.json`, `./${TARGET}/${browser}/manifest.json`);
 }
 
 function errorHandler(error) {

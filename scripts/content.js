@@ -132,7 +132,7 @@ function createButtonInFileActions() {
     let webAuthorButton = document.createElement('a');
     webAuthorButton.href = getWebAuthorUrl(window.location.href);
     webAuthorButton.className = 'btn btn-sm BtnGroup-item';
-    webAuthorButton.innerHTML = 'Oxygen XML Web Author';
+    webAuthorButton.innerHTML = 'Edit in Web Author';
     webAuthorButton.target = '_blank';
     webAuthorButton.id = 'walink';
 
