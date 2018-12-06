@@ -2,7 +2,7 @@
     "name": "Edit with Oxygen XML Web Author",
     "short_name": "Edit with Web Author",
     "description": "The XML editor that helps your whole team engage in content creation",
-    "version": "0.01",
+    "version": "1.0",
     "manifest_version": 2,
     "permissions": [
         "tabs",
