@@ -21,7 +21,7 @@ or open the document and click ```Edit in Web Author```
 ![Screenshot](docs/ex2.png)
 
 
-## Instalation
+## Installation
 
 ### Chrome Web Store  
 [![Facebook Notifier available in the Chrome Web Store](https://developer.chrome.com/webstore/images/ChromeWebStore_BadgeWBorder_v2_206x58.png)](#)
