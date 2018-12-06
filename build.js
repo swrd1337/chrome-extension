@@ -1,16 +1,18 @@
-let gulp = require('gulp')
-let fs = require('fs-extra');
+const gulp = require('gulp')
+const fs = require('fs-extra');
 
 require('./gulpfile');
 
-const CHROME = 'chrome';
-const FIREFOX = 'firefox';
-const TARGET = 'target';
+const val = {
+    CHROME : 'chrome',
+    FIREFOX : 'firefox',
+    TARGET : 'target' 
+}
 
 let chromeOrFirefox = '';
 
-if (!fs.existsSync(`/${TARGET}`)) {
-    fs.mkdir(TARGET, errorHandler);
+if (!fs.existsSync(`/${val.TARGET}`)) {
+    fs.mkdir(val.TARGET, errorHandler);
 }
 
 process.argv.forEach((val, index) => {
@@ -19,22 +21,22 @@ process.argv.forEach((val, index) => {
     }
 });
 
-if (!fs.existsSync(`${TARGET}/${chromeOrFirefox}`)) {
-    fs.mkdir(`${TARGET}/${chromeOrFirefox}`, errorHandler);
+if (!fs.existsSync(`${val.TARGET}/${chromeOrFirefox}`)) {
+    fs.mkdir(`${val.TARGET}/${chromeOrFirefox}`, errorHandler);
 }
 
-if (chromeOrFirefox === CHROME) {
-    extensionBuilder(CHROME, 'gc');
+if (chromeOrFirefox === val.CHROME) {
+    extensionBuilder(val.CHROME, 'gc');
 } else {
-    extensionBuilder(FIREFOX, 'ff');
+    extensionBuilder(val.FIREFOX, 'ff');
 }
 
 function extensionBuilder(browser, ext) {
     gulp.start(browser);
-    fs.copy('images', `${TARGET}/${browser}/images`, errorHandler);
-    fs.copy('styles', `${TARGET}/${browser}/styles`, errorHandler);
-    fs.copySync('./popup.html', `${TARGET}/${browser}/popup.html`);
-    fs.copySync(`./${ext}-manifest.json`, `./${TARGET}/${browser}/manifest.json`);
+    fs.copy('images', `${val.TARGET}/${browser}/images`, errorHandler);
+    fs.copy('styles', `${val.TARGET}/${browser}/styles`, errorHandler);
+    fs.copySync('./popup.html', `${val.TARGET}/${browser}/popup.html`);
+    fs.copySync(`./${ext}-manifest.json`, `./${val.TARGET}/${browser}/manifest.json`);
 }
 
 function errorHandler(error) {

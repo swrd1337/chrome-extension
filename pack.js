@@ -1,5 +1,5 @@
-let fs = require('fs-extra');
-let archiver = require('archiver');
+const fs = require('fs-extra');
+const archiver = require('archiver');
 
 let browser;
 

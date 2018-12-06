@@ -1,5 +1,5 @@
-let gulp = require('gulp');
-let iife = require('gulp-iife');
+const gulp = require('gulp');
+const iife = require('gulp-iife');
 
 gulp.task('chrome', function() {
     return gulpScripts('./target/chrome/scripts');
