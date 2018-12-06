@@ -1,10 +1,17 @@
 ## Installation
 
+<br/>
+
 Clone repository.
 
 ```git clone https://github.com/swrd1337/web-author-chrome-extension.git```
 
+<br/>
+<br/>
+
 ### Google Chrome:
+
+<br/>
 
 1) Go to root directory.
 
@@ -18,8 +25,12 @@ Clone repository.
 
 Done.
 
+<br/>
+<br/>
 
 ### Mozilla Firefox:
+
+<br/>
 
 1) Go to root directory.
 
@@ -31,8 +42,12 @@ Done.
 
 Done.
 
+<br/>
+<br/>
 
 ### Both
+
+<br/>
 
 1) Go to root directory.
 
@@ -40,8 +55,12 @@ Done.
 
 3) Go to ```target``` directory.
 
+<br/>
+<br/>
 
 ### Commands
+
+<br/>
 
 ```npm run chrome``` - build chrome extension
 
