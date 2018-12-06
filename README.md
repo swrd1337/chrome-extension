@@ -6,6 +6,9 @@ Supported browsers: Google Chrome, Mozilla Firefox.
 
 Supported file formats: xml, dita, ditamap, ditaval, xhtml.
 
+
+
+
 ## How to use
 
 1) Enter Oxygen XML Web Author dashboard in input file.
@@ -21,13 +24,18 @@ or open the document and click ```Edit in Web Author```
 ![Screenshot](docs/ex2.png)
 
 
+
+
 ## Installation
+
 
 ### Chrome Web Store  
 [![Facebook Notifier available in the Chrome Web Store](https://developer.chrome.com/webstore/images/ChromeWebStore_BadgeWBorder_v2_206x58.png)](#)
 
 ### Mozilla Add-ons
 [![Facebook Notifier available in Mozilla Add-ons](https://addons.cdn.mozilla.net/static/img/addons-buttons/AMO-button_1.png)](#)
+
+
 
 
 ## [Developers](docs/DEV.md)
