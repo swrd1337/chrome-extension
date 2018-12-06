@@ -29,7 +29,7 @@ Supported file extensions: xml, dita, ditamap, ditaval, xhtml.
 ![Screenshot](docs/ex1.png)
 
 
-3.1) or open the document and click ```Edit in Web Author```
+4) or open the document and click ```Edit in Web Author```
 
 ![Screenshot](docs/ex2.png)
 
