@@ -48,7 +48,7 @@ Supported file extensions: xml, dita, ditamap, ditaval, xhtml.
 
 <br/>
 
-## [Developers](docs/DEV.md)
+## Developers
 
 Click [here](docs/DEV.md) for details.
 
