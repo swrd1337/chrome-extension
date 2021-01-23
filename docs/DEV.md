@@ -24,8 +24,13 @@
 ### Commands
 
 ```npm run chrome``` - build chrome extension
+
 ```npm run firefox``` - build firefox extension 
+
 ```npm run fox``` - build and run firefox extension for testing 
+
 ```npm run pack-chrome``` - build and zip chrome extension
+
 ```npm run pack-firefox``` - build and zip firefox extension
+
 ```npm run pack-ext``` - build and zip both
